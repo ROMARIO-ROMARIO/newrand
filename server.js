@@ -18,9 +18,10 @@ app.get('/', (req, res) => {
 
 // Обработка запросов на получение случайного числа
 app.get('/random', (req, res) => {
-    const randomValue = Math.floor(Math.random() * 37); // Генерация числа от 0 до 36 включительно
-    res.json({ value: randomValue });
-});
+      res.set('Cache-Control', 'no-store');  // Запрещаем кэширование данного ответа
+      const randomValue = Math.floor(Math.random() * 37); // Генерация числа от 0 до 36 включительно
+      res.json({ value: randomValue });
+  });
 
 // Запуск сервера
 app.listen(PORT, () => {

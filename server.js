@@ -4,6 +4,13 @@ const app = express();
 // Используем переменную окружения PORT или, если она не задана, порт 4000
 const PORT = process.env.PORT || 4000;
 
+// Подключение CORS middleware
+app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*"); // В продуктивной среде замените "*" на точные домены, например "https://yourdomain.com"
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
+
 // Обработка корневого запроса
 app.get('/', (req, res) => {
     res.send('<h1>Добро пожаловать на сервер генерации случайных чисел!</h1><p>Используйте /random для получения случайного числа.</p>');
@@ -17,5 +24,5 @@ app.get('/random', (req, res) => {
 
 // Запуск сервера
 app.listen(PORT, () => {
-    console.log(`Сервер запущен на порту ${PORT}. Перейдите на http://localhost:${PORT}/ для начала работы.`);
+    console.log(`Сервер запущen on порту ${PORT}. Перейдите на http://localhost:${PORT}/ для начала работы.`);
 });

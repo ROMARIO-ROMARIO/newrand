@@ -11,12 +11,12 @@ app.use((req, res, next) => {
 });
 
 app.get('/', (req, res) => {
+    res.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');  // Запрещаем кэширование для этого запроса
     res.send('<h1>Добро пожаловать на сервер генерации случайных чисел!</h1><p>Используйте /random для генерации числа.</p>');
 });
 
 app.get('/random', async (req, res) => {
     try {
-        // Получение текущего времени с World Time API
         const timeResponse = await axios.get('http://worldtimeapi.org/api/timezone/Etc/UTC');
         const now = new Date(timeResponse.data.utc_datetime);
         const mm = String(now.getUTCMinutes()).padStart(2, '0');
@@ -24,9 +24,11 @@ app.get('/random', async (req, res) => {
         const hh = String(now.getUTCHours()).padStart(2, '0');
         const dd = String(now.getUTCDate()).padStart(2, '0');
         const yyyy = now.getUTCFullYear();
-        const rr = Math.floor(Math.random() * 37) + 10; // Генерация числа от 10 до 46 включительно 
+        const rr = Math.floor(Math.random() * 37) + 10;
 
         const formattedOutput = `${mm}${ss}${hh}${dd}${yyyy}${rr}`;
+        
+        res.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');  // Запрещаем кэширование для этого запроса
         res.json({ value: formattedOutput });
     } catch (error) {
         console.error('Ошибка при получении данных с World Time API:', error);

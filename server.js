@@ -24,7 +24,7 @@ app.get('/random', async (req, res) => {
         const hh = String(now.getUTCHours()).padStart(2, '0');
         const dd = String(now.getUTCDate()).padStart(2, '0');
         const yyyy = now.getUTCFullYear();
-        const rr = Math.floor(Math.random() * 37); // Случайное число от 0 до 36
+        const rr = Math.floor(Math.random() * 37) + 10; // Генерация числа от 10 до 46 включительно 
 
         const formattedOutput = `${mm}${ss}${hh}${dd}${yyyy}${rr}`;
         res.json({ value: formattedOutput });
